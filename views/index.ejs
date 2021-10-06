@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Music Controller</title>
+    <link rel="stylesheet" href="assets/styles/index.css">
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+    <nav id="chatNavigation">
+        <h1 id="mainTitle">Web Music Controller</h1>
+        <span class="disconnected connectionStatus" id="connectionStatus"></span>
+    </nav>
+    <div id="connectedUsers">
+        <h2>Connected users</h2>
+        <div id="connectedUsersList"></div>
+    </div>
+    <div id="content">
+        <div id="chat"></div>
+        <form id="chatForm">
+            <textarea id="message" placeholder="Message"></textarea>
+            <input type="submit" value="Send">
+        </form>
+    </div>
+</body>
+</html>
