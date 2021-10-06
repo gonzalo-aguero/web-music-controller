@@ -7,11 +7,11 @@ For the development I used Node JS, Express and WebSockets.
 ## For install this web application in your computer
 ### Clone the repository
 ~~~
-git clone https://github.com/gonzalo90fa/gma-chat.git
+git clone https://github.com/gonzalo-aguero/web-music-controller.git
 ~~~
 ### Navigate to cloned repository folder.
 ~~~
-cd gma-chat
+cd web-music-controller
 ~~~
 ### Go to ./public/config.js and change const developmentMode to "true";
 ~~~
@@ -27,4 +27,5 @@ cd gma-chat
 npm start
 ~~~
 ## Go to http://localhost/player for use the player.
-## Go to http://youLocalIP/ for use the controller (You can use the controller from any device connected to your network using the IP of your computer assigned by the router).
+## Go to http://youLocalIP/ for use the controller:
+You can use the controller from any device connected to your network using the IP of your computer assigned by the router.
