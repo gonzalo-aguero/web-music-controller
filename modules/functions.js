@@ -20,6 +20,7 @@ function listDirectory(path = null){
         const files = fs.readdirSync(path);
         return files;
     }
+    console.error("Error: Path is required in listDirectory()");
     return false;
 }
 module.exports.useDate = useDate;

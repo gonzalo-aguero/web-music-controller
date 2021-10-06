@@ -7,26 +7,22 @@
     <title>Web Music Controller</title>
     <link rel="stylesheet" href="assets/styles/index.css">
     <script src="config.js"></script>
-    <script src="app.js"></script>
+    <script src="controller.js"></script>
 </head>
 <body>
     <nav id="chatNavigation">
         <h1 id="mainTitle">Web Music Controller</h1>
         <span class="disconnected connectionStatus" id="connectionStatus"></span>
         <button id="connect">Connect</button>
+        <button id="disconnect" disabled="disabled">Disconnect</button>
     </nav>
-    <div id="connectedUsers">
-        <h2>Connected users</h2>
-        <div id="connectedUsersList"></div>
-    </div>
     <div id="content">
-        <div id="chat">
-            
+        <div id="songs">
         </div>
-        <form id="chatForm">
+        <!-- <form id="controllerForm">
             <textarea id="message" placeholder="Message"></textarea>
             <input type="submit" value="Send">
-        </form>
+        </form> -->
     </div>
 </body>
 </html>

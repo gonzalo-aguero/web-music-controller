@@ -1,6 +1,7 @@
 "use strict";
 var socket;
 window.onload = ()=>{
+    connect();
     document.getElementById("start").addEventListener("click", connect);
 }
 /**
@@ -20,6 +21,9 @@ function connect(){
         const response = JSON.parse(evt.data);
         console.log("Message from server:", response);
         switch (response.operation) {
+            case 'newData':
+                newSong(response.data);
+                break;
             case 'newSong':
                 newSong(response.data);
                 break;
@@ -42,8 +46,7 @@ function connect(){
  */
 function newSong(data) {
     document.getElementById("songTitle").innerHTML = data.song.title;
-    document.querySelector("audio").play();
-    // document.getElementById("iframe").setAttribute("src", 
-    // "https://www.youtube.com/embed/"
-    // + data.song.src);
+    const audio = document.querySelector("audio");
+    audio.setAttribute("src", "./assets/songs/" + data.song.src);
+    audio.play();
 }
