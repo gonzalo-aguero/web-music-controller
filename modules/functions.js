@@ -14,4 +14,13 @@ function useDate(){
     dateString += " "+ (hour < 10 ? "0" + hour : hour) +":"+ (minute < 10 ? "0" + minute : minute);
     return dateString;
 }
+function listDirectory(path = null){
+    if(path!==null){
+        const fs = require('fs');
+        const files = fs.readdirSync(path);
+        return files;
+    }
+    return false;
+}
 module.exports.useDate = useDate;
+module.exports.listDirectory = listDirectory;

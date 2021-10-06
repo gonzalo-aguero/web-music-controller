@@ -1,7 +1,10 @@
 "use strict";
 var socket;
+var connectButton;
 window.onload = ()=>{
     connect();
+    connectButton = document.getElementById("connect")
+    connectButton.addEventListener("click", connect);
     //Event to send message with the new song.
     document.getElementById("message").addEventListener("keypress", e =>{
         if(e.key === 'Enter'){
@@ -47,6 +50,7 @@ function connect(){
 function connectedStatus(){
     const connectionStatusHTML = document.getElementById("connectionStatus");
     connectionStatusHTML.classList.replace("disconnected", "connected");
+    connectButton.disabled = true;
 }
 /**
  * Set the DOM status when the client is disconnected.
@@ -54,6 +58,7 @@ function connectedStatus(){
 function disconnectedStatus(){
     const connectionStatusHTML = document.getElementById("connectionStatus");
     connectionStatusHTML.classList.replace("connected", "disconnected");
+    connectButton.disabled = false;
 }
 /**
  * Change the current song.

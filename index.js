@@ -20,8 +20,10 @@ const wsServer = new WebSocketServer({
 var connections = [];
 var globalData = {
     song: {
-        title: "-"
-    }
+        title: "-",
+        src: null,
+    },
+    songs: functions.listDirectory()
 };
 var player = null;
 wsServer.on('request', (req)=>{
@@ -29,7 +31,7 @@ wsServer.on('request', (req)=>{
     const _remoteAddress = _connection.remoteAddress;
     connections.push(_connection);
     console.log(`New client connected at ${functions.useDate()} ---> ${_remoteAddress}`);
-    
+    newData();
     //Event when receiving a new message.
     _connection.on("message", (message)=>{
         const msg = JSON.parse(message.utf8Data);
@@ -84,7 +86,18 @@ server.listen(app.get('port'), ()=>{
 })
 
 
-
+function newData(){
+    let msg = {
+        operation: 'newData',
+        data: globalData
+    }
+    msg = JSON.stringify(msg);
+    try {
+        player.sendUTF(msg);
+    } catch (error) {
+        console.warn(error);
+    }
+}
 function changeSong(data){
     globalData = data;
     let msg = {

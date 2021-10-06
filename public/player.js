@@ -1,7 +1,7 @@
 "use strict";
 var socket;
 window.onload = ()=>{
-    connect();
+    document.getElementById("start").addEventListener("click", connect);
 }
 /**
  * Connect to the server.
@@ -42,7 +42,8 @@ function connect(){
  */
 function newSong(data) {
     document.getElementById("songTitle").innerHTML = data.song.title;
-    document.getElementById("iframe").setAttribute("src", 
-    "https://www.youtube.com/embed/"
-    + data.song.src);
+    document.querySelector("audio").play();
+    // document.getElementById("iframe").setAttribute("src", 
+    // "https://www.youtube.com/embed/"
+    // + data.song.src);
 }
