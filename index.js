@@ -21,7 +21,7 @@ var connections = [];
 var globalData = {
     song: {
         id: null,
-        title: "No audio stablished",
+        title: "None",
         src: null,
         reproducing: true
     },
@@ -105,7 +105,7 @@ app.use((req, res, next)=>{
     res.type('txt').send('Not found');
 });
 server.listen(app.get('port'), ()=>{
-    console.log("Listening in port",app.get('port'));
+    console.log(`Listening in port ${app.get('port')}\nGo to http://localhost:${app.get('port')}`);
 })
 
 /**

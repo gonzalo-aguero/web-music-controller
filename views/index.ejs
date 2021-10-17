@@ -7,22 +7,27 @@
     <title>Web Music Controller</title>
     <link rel="stylesheet" href="assets/styles/index.css">
     <script src="config.js"></script>
-    <script src="controller.js"></script>
+    <script src="controller/controller.js"></script>
+    <script src="controller/animations.js"></script>
 </head>
 <body>
     <nav id="chatNavigation">
         <h1 id="mainTitle">Web Music Controller</h1>
-        <span class="disconnected connectionStatus" id="connectionStatus"></span>
-        <button id="connect">Connect</button>
-        <button id="disconnect" disabled="disabled">Disconnect</button>
+        <span class="disconnected connectionStatus" id="connectionStatus" style="display:none;"></span>
+        <button id="connect" style="display:none;">Connect</button>
+        <button id="disconnect" disabled="disabled" style="display:none;">Disconnect</button>
+        <div>
+            <span id="songsCounter">0 songs</span>
+            <span> - </span>
+            <span id="currentSong">None</span>
+        </div>
     </nav>
     <div id="content">
         <div id="songs">
         </div>
-        <!-- <form id="controllerForm">
-            <textarea id="message" placeholder="Message"></textarea>
-            <input type="submit" value="Send">
-        </form> -->
     </div>
+    <footer id="footer">
+        <h3>Powered by GMA Software</h3>
+    </footer>
 </body>
 </html>

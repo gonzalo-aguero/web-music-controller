@@ -9,6 +9,15 @@ window.onload = ()=>{
 
     connectButton.addEventListener("click", connect);
     disconnectButton.addEventListener("click", disconnect);
+
+    //init animations
+    coloredBackground(document.getElementById("chatNavigation"));    
+    setTimeout(()=>{
+        coloredBackground(document.getElementById("songs"));
+    },750);
+    setTimeout(()=>{
+        coloredBackground(document.getElementById("footer"));
+    },1500);
 }
 /**
  * Connect to the server.
@@ -96,4 +105,10 @@ function newData(data){
         >${song.title}</button>`;
     });
     document.getElementById("songs").innerHTML = html;
+    document.getElementById("songsCounter").innerText = data.songs.length + ' songs';
+    const currentSong = data.song.title;
+    document.getElementById("currentSong").innerText = 
+        currentSong.length <= 30 
+        ? currentSong 
+        : currentSong.slice(0,27) + '...';
 }
