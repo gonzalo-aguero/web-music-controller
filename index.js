@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const path = require("path");
@@ -6,6 +7,7 @@ const server = require('http').Server(app);
 const WebSocketServer = require("websocket").server;
 const functions = require('./modules/functions');
 
+console.log(process.env.h);
 app.set('port', process.env.PORT || 3000);
 app.use(cors());
 app.use(express.json());

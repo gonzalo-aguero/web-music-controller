@@ -13,6 +13,10 @@ git clone https://github.com/gonzalo-aguero/web-music-controller.git
 ~~~
 cd web-music-controller
 ~~~
+### Install dependencies.
+~~~
+npm install
+~~~
 ### Go to ./public/config.js and change const developmentMode to "true";
 ~~~
 1 const developmentMode = false; // Line number 1
