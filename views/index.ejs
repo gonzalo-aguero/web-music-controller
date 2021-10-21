@@ -6,8 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Music Controller</title>
     <link rel="stylesheet" href="assets/styles/index.css">
+    <link rel="stylesheet" href="assets/styles/controller/footerNavigation.css">
+
     <script src="./js/config.js"></script>
     <script src="./js/controller/controller.js"></script>
+    <script src="./js/controller/footerNavigation.js"></script>
     <script src="./js/controller/animations.js"></script>
 </head>
 <body>
@@ -25,7 +28,11 @@
     <div id="content">
         <div id="songs">
         </div>
+        <div id="playQueue" style="display: none;"></div>
     </div>
+    <nav id="footerNavigation">
+        <button id="playQueueButton" onclick="displayPlayQueue()">See Queue</button>
+    </nav>
     <footer id="footer">
         <h3>Powered by GMA Software</h3>
     </footer>

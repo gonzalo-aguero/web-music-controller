@@ -1,5 +1,8 @@
 "use strict";
 var socket;
+var globalData = {};
+var currentSongIndex = -1;
+var playOn = false;
 window.onload = ()=>{
     connect();
     document.getElementById("start").addEventListener("click", connect);
@@ -16,16 +19,14 @@ function connect(){
             operation: "playerConnected"
         });
         socket.send(data);
+        playOn = true;
     }
     socket.onmessage = (evt)=>{
         const response = JSON.parse(evt.data);
         console.log("Message from server:", response);
         switch (response.operation) {
             case 'newData':
-                newSong(response.data);
-                break;
-            case 'newSong':
-                newSong(response.data);
+                newData(response.data);
                 break;
             default:
                 console.error("Undefined operation");
@@ -34,19 +35,50 @@ function connect(){
     }
     socket.onclose = (evt)=>{
         console.log("Disconnected");
+        console.log("Trying to connect...");
+        connect();
     }
     socket.onerror = (evt)=>{
-        alert("An error has occurred");
-        console.error(evt);
+        console.error("An error has occurred",evt);
     }
 }
-/**
- * Update the current song.
- * @param {JSON} data 
- */
-function newSong(data) {
-    document.getElementById("songTitle").innerHTML = data.song.title;
+function newData(data){
+    globalData = data;
+    play();
+}
+function play(){
+    const defaultPath = "./assets/songs/";//default path of songs.
+    const songTitle = document.getElementById("songTitle");
     const audio = document.querySelector("audio");
-    audio.setAttribute("src", "./assets/songs/" + data.song.src);
-    audio.play();
+    setInterval(()=>{
+        if(playOn){
+            //Only if play is on.
+            if(audio.ended || audio.getAttribute("src") === ""){
+                //If the last song has finished or there is no last song.
+                if(currentSongIndex < globalData.queue.length -1){
+                    currentSongIndex++;
+                    const song = globalData.queue[currentSongIndex];
+                    songTitle.innerHTML = song.title;
+                    audio.setAttribute("src", defaultPath + song.src);
+                    audio.play();
+                    changeSong(song.id);
+                }
+            }
+        }
+    }, 200);
+}
+/**
+ * Send the current song to the server.
+ * @param {Number} songId 
+ */
+ function changeSong(songId) {
+    const data = JSON.stringify({
+        operation: "changeSong",
+        data: {
+            song: {
+                id: songId,
+            }
+        }
+    });
+    socket.send(data);
 }

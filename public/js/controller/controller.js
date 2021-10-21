@@ -2,6 +2,7 @@
 var socket;
 var connectButton;
 var disconnectButton;
+var globalData;
 window.onload = ()=>{
     connect();
     connectButton = document.getElementById("connect");
@@ -51,6 +52,8 @@ function connect(){
     socket.onclose = (evt)=>{
         disconnectedStatus();
         console.log("Disconnected");
+        console.log("Trying to connect...");
+        connect();
     }
     socket.onerror = (evt)=>{
         alert("An error has occurred");
@@ -79,8 +82,8 @@ function disconnectedStatus(){
     disconnectButton.disabled = true;
 }
 /**
- * Change the current song.
- * @param {JSON} songId 
+ * Change the current song and send the change to the server.
+ * @param {Number} songId 
  */
 function changeSong(songId) {
     const data = JSON.stringify({
@@ -94,21 +97,60 @@ function changeSong(songId) {
     socket.send(data);
 }
 /**
- * Update the data.
+ * Add a song to the play queue and send the data to the server.
+ * @param {Number} songId 
+ */
+function addToQueue(songId){
+    const data = JSON.stringify({
+        operation: "addToQueue",
+        data: {
+            song: {
+                id: songId,
+            }
+        }
+    });
+    socket.send(data);
+}
+/**
+ * Update the data when the server sends it.
  * @param {JSON} data 
  */
 function newData(data){
+    globalData = data;
+    updateSongsList();
+    updateCurrentSong();
+    updateQueue();
+}
+function updateSongsList(){
     let html = "";
-    data.songs.forEach( song => {
-        html += `<button onclick="changeSong('${song.id}')"
-            class="${song.reproducing ? "reproducing" : ""}"
-        >${song.title}</button>`;
+    globalData.songs.forEach( song => {
+        html += `
+            <li class="song ${song.id == globalData.song.id ? "reproducing" : ""}">
+                <button onclick="">${song.title}</button>
+                <button onclick="addToQueue('${song.id}')">Add to queue</button>
+            </li>`;
     });
     document.getElementById("songs").innerHTML = html;
-    document.getElementById("songsCounter").innerText = data.songs.length + ' songs';
-    const currentSong = data.song.title;
+    document.getElementById("songsCounter").innerText = globalData.songs.length + ' songs';
+}
+function updateCurrentSong(){
+    const currentSong = globalData.song.title;
     document.getElementById("currentSong").innerText = 
         currentSong.length <= 30 
         ? currentSong 
-        : currentSong.slice(0,27) + '...';
+        : currentSong.slice(0,27) + '...';   
+}
+/**
+ *  Update the play queue with the new data.
+ **/   
+function updateQueue(){
+    let html = "";
+    globalData.queue.forEach( song => {
+        html += `
+            <li class="song ${song.id == globalData.song.id ? "reproducing" : ""}">
+                <button>${song.title}</button>
+                <button onclick="">Remove</button>
+            </li>`;
+    });
+    document.getElementById("playQueue").innerHTML = html;
 }

@@ -23,11 +23,5 @@ function listDirectory(path = null){
     console.error("Error: Path is required in listDirectory()");
     return false;
 }
-function getSongs(callback = (songs = [])=>{}){
-    const songs = listDirectory("./public/assets/songs/");
-    callback(songs);
-    return songs;
-}
 module.exports.useDate = useDate;
 module.exports.listDirectory = listDirectory;
-module.exports.getSongs = getSongs;

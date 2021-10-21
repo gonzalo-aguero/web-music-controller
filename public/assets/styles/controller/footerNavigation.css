@@ -1,0 +1,33 @@
+#footerNavigation{
+    position: fixed;
+    bottom: 0;
+    left:0;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    background-color: rgba(0,0,0,0.5);
+    font-size: 1em;
+    padding: 1em;
+    z-index: 5;
+}
+#footerNavigation > button{
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+#playQueue{
+    position: fixed;
+    left: 6%;
+    top: 7%;
+    display: flex;
+    flex-flow: column;
+    background: rgba(0,0,0,0.7);
+    width: 86%;
+    height: 88%;
+    z-index: 10;
+    border: .5px #565656 solid;
+    padding: 1em;
+    list-style: none;
+}
