@@ -7,7 +7,6 @@ const server = require('http').Server(app);
 const WebSocketServer = require("websocket").server;
 const functions = require('./modules/functions');
 
-console.log(process.env.h);
 app.set('port', process.env.PORT || 3000);
 app.use(cors());
 app.use(express.json());
@@ -32,15 +31,22 @@ var globalData = {
     ]
 };
 var player = null;
-const songs = functions.listDirectory("./public/assets/songs/");
-songs.forEach( (song, i) => {
-    globalData.songs.push({
-        id: i,
-        title: song.replace('.mp3', ''),
-        src: song,
-        reproducing: false
+setInterval(()=>{
+    functions.getSongs((songs)=>{
+        const indexCurrentSong = globalData.songs.findIndex( song => song.reproducing === true);
+        globalData.songs = [];
+        songs.forEach( (song, i) => {
+            globalData.songs.push({
+                id: i,
+                title: song.replace('.mp3', ''),
+                src: song,
+                reproducing: i === indexCurrentSong ? true : false
+            });
+        });
+        newData(false, false);
     });
-});
+}, 2000);
+
 wsServer.on('request', (req)=>{
     const _connection = req.accept(null, req.origin);
     const _remoteAddress = _connection.remoteAddress;
@@ -112,24 +118,31 @@ server.listen(app.get('port'), ()=>{
 
 /**
  * Send the updated data.
- * @param {JSON} specificConnection To send the updated data only to a specific connection.
+ * @param {JSON} specificConnection To send the updated data only to a specific connection. It's false by default (disabled).
+ * @param {Boolean} sendToPlayer If it's true, it will send the new data to player connection. Default: true.
  */
-function newData(specificConnection = null){
+function newData(specificConnection = false, sendToPlayer = true){
     let msg = {
         operation: 'newData',
         data: globalData
     }
     msg = JSON.stringify(msg);
-    if(specificConnection === null){
+    if(!specificConnection){
+        //Send new data to all the connections.
         connections.forEach( connection => {
-            connection.instance.sendUTF(msg);
+            if(!connection.isPlayer){
+                connection.instance.sendUTF(msg);
+            }
         });
-        try {
-            player.sendUTF(msg);
-        } catch (error) {
-            console.error(error);
+        if(sendToPlayer){
+            try {
+                player.sendUTF(msg);
+            } catch (error) {
+                console.error(error);
+            }
         }
     }else{
+        //Send new data to a specific connection.
         specificConnection.sendUTF(msg);
     }
 }
