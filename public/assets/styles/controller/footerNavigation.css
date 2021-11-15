@@ -17,17 +17,3 @@
     color: white;
     cursor: pointer;
 }
-#playQueue{
-    position: fixed;
-    left: 6%;
-    top: 7%;
-    display: flex;
-    flex-flow: column;
-    background: rgba(0,0,0,0.7);
-    width: 86%;
-    height: 88%;
-    z-index: 10;
-    border: .5px #565656 solid;
-    padding: 1em;
-    list-style: none;
-}

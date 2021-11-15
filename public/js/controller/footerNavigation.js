@@ -1,3 +1,3 @@
 function displayPlayQueue(){
-    document.getElementById("playQueue").style.display = "flex";
+    document.getElementById("windowContainer_0").style.display = "flex";
 }

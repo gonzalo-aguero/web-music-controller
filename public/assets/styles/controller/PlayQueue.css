@@ -1,0 +1,33 @@
+#playQueue{
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    background: rgba(0,0,0,0.7);
+    width: 90%;
+    height: 95%;
+    border: .5px #444444 solid;
+    padding: 4em 1em;
+    list-style: none;
+}
+#playQueue > nav{
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 100%;
+    height: 4em;
+    padding: 1em;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+#playQueue > nav button{
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+#playQueue > nav button:hover{
+    opacity: 0.65;
+}
+#playQueue .song button{
+    font-size: .7em;
+}

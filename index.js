@@ -18,5 +18,5 @@ new ws.wsHandler(server);
 //Routes
 app.use(require('./modules/routes'));
 server.listen(app.get('port'), ()=>{
-    console.log(`Listening in port ${app.get('port')}\nGo to http://localhost:${app.get('port')}`);
+    console.log(`Listening in port ${app.get('port')}\nGo to http://localhost:${app.get('port')} to use the controller\nand go to http://localhost:${app.get('port')}/player to use the player.`);
 })
