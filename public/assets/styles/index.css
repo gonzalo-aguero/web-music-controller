@@ -5,6 +5,9 @@
     --borderColor: #d6d6d6;
     --darkGrey: #3d4242;
 }
+*{
+    box-sizing: border-box;
+}
 html,body{
     overflow-x: hidden;
     overflow-y: auto;
@@ -133,4 +136,20 @@ body{
     color: white;
     text-align: center;
     font-weight: 100;
+}
+
+
+
+
+
+.windowContainer{
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top:0;
+    position: fixed;
+    z-index: 10;
+    flex-flow: column;
+    justify-content: center; 
+    align-items: center;
 }

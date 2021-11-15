@@ -112,6 +112,21 @@ function addToQueue(songId){
     socket.send(data);
 }
 /**
+ * Remove a song from the play queue and send the data to the server.
+ * @param {Number} songId 
+ */
+function removeFromQueue(songId){
+    const data = JSON.stringify({
+        operation: "removeFromQueue",
+        data: {
+            song: {
+                id: songId,
+            }
+        }
+    });
+    socket.send(data);
+}
+/**
  * Update the data when the server sends it.
  * @param {JSON} data 
  */
@@ -121,6 +136,9 @@ function newData(data){
     updateCurrentSong();
     updateQueue();
 }
+/**
+ * Update the list of the songs in HTML.
+ */
 function updateSongsList(){
     let html = "";
     globalData.songs.forEach( song => {
@@ -133,6 +151,9 @@ function updateSongsList(){
     document.getElementById("songs").innerHTML = html;
     document.getElementById("songsCounter").innerText = globalData.songs.length + ' songs';
 }
+/**
+ * Update the current song title in the header in HTML.
+ */
 function updateCurrentSong(){
     const currentSong = globalData.song.title;
     document.getElementById("currentSong").innerText = 
@@ -141,16 +162,67 @@ function updateCurrentSong(){
         : currentSong.slice(0,27) + '...';   
 }
 /**
- *  Update the play queue with the new data.
+ * Update the play queue with the new data and print it.
  **/   
 function updateQueue(){
-    let html = "";
-    globalData.queue.forEach( song => {
+    let html = `
+        <div id="playQueue">
+            <nav>
+                <button id="clearPlayQueue" onclick="clearPlayQueue()">
+                    <img src="assets/icons/delete_white_24dp.svg" alt="Clear play queue">
+                </button>
+                <button class="close">
+                    <img src="assets/icons/close_white_24dp.svg" alt="Close">
+                </button>
+            </nav>
+        `;
+    const windowContainer = document.getElementById("windowContainer_0");
+    if(globalData.queue.length > 0){
+       globalData.queue.forEach( song => {
+            html += `
+                <li class="song ${song.id == globalData.song.id ? "reproducing" : ""}">
+                    <button>${song.title}</button>
+                    <button onclick="removeFromQueue('${song.id}')">Remove</button>
+                </li>`;
+        });
+    }else{
         html += `
-            <li class="song ${song.id == globalData.song.id ? "reproducing" : ""}">
-                <button>${song.title}</button>
-                <button onclick="">Remove</button>
-            </li>`;
+            <span>No songs added to the queue.</span>
+        `;
+    }
+    html += `</div>`; 
+
+    windowContainer.innerHTML = html;
+    document.querySelector('#playQueue > nav > .close').addEventListener("click", ()=>{
+        windowContainer.style.display = "none";
     });
-    document.getElementById("playQueue").innerHTML = html;
+}
+/**
+ * Finalize the current song and then restart the play queue. 
+ */
+function restartQueue(){
+    if(globalData.queue.length < 1){
+        alert("The play queue is empty.");
+        return;
+    }
+    const msg = "It will restart the play queue.\nAre you sure?";
+    if(confirm(msg)){
+        const data = JSON.stringify({
+            operation: "restartQueue"
+        });
+        socket.send(data);
+    }
+}
+function clearPlayQueue(){
+    if(globalData.queue.length < 1){
+        alert("The play queue is empty.");
+        return;
+    }
+    const msg = "It will clear the play queue.\nAre you sure?";
+    if(confirm(msg)){
+        const data = JSON.stringify({
+            operation: "clearPlayQueue"
+        });
+        socket.send(data);
+    }
 }

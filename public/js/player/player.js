@@ -1,7 +1,7 @@
 "use strict";
 var socket;
 var globalData = {};
-var currentSongIndex = -1;
+var currentSongIndex = -1;//Current song index in queue.
 var playOn = false;
 window.onload = ()=>{
     connect();
@@ -27,6 +27,18 @@ function connect(){
         switch (response.operation) {
             case 'newData':
                 newData(response.data);
+                break;
+            case 'removedFromQueue':
+                const removedSongIndex = response.data.song.index;
+                if(removedSongIndex <= currentSongIndex){
+                    currentSongIndex--;
+                }
+                break;
+            case 'restartQueue':
+                currentSongIndex = -1;
+                break;
+            case 'clearPlayQueue':
+                currentSongIndex = -1;
                 break;
             default:
                 console.error("Undefined operation");

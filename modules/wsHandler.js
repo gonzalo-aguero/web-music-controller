@@ -57,6 +57,15 @@ class wsHandler{
                     case 'addToQueue':
                         this.addToQueue(msg.data.song.id);
                         break;
+                    case 'removeFromQueue':
+                        this.removeFromQueue(msg.data.song.id);
+                        break;
+                    case 'restartQueue':
+                        this.restartQueue();
+                        break;
+                    case 'clearPlayQueue':
+                        this.clearPlayQueue();
+                        break;
                     default:
                         console.error("Undefined operation");
                         break;
@@ -158,6 +167,49 @@ class wsHandler{
     addToQueue(songId){
         const song = this.globalData.songs.find(song => song.id == songId);
         this.globalData.queue.push(song);
+        this.newData();//send the updated data.
+    }
+    /**
+     * Remove a song from the play queue and send the updated data to clients.
+     * @param {Number} songId 
+     */
+    removeFromQueue(songId){
+        const songIndex = this.globalData.queue.findIndex(song => song.id == songId);
+        if(songIndex !== -1){
+            this.globalData.queue.splice(songIndex, 1);
+        }
+        let msg = {
+            operation: 'removedFromQueue',
+            data: {
+                song: {
+                    index: songIndex,
+                },
+            }
+        }
+        msg = JSON.stringify(msg);
+        this.player.sendUTF(msg);
+        this.newData();//send the updated data.
+    }
+    /**
+     * Restart the play queue.
+     */
+    restartQueue(){
+        let msg = {
+            operation: 'restartQueue'
+        }
+        msg = JSON.stringify(msg);
+        this.player.sendUTF(msg);
+    }
+    /**
+     * Clear the play queue.
+     */
+    clearPlayQueue(){
+        this.globalData.queue = [];
+        let msg = {
+            operation: 'clearPlayQueue'
+        }
+        msg = JSON.stringify(msg);
+        this.player.sendUTF(msg);
         this.newData();//send the updated data.
     }
 }
