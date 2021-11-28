@@ -83,7 +83,7 @@ function play(){
  * Send the current song to the server.
  * @param {Number} songId 
  */
- function changeSong(songId) {
+function changeSong(songId) {
     const data = JSON.stringify({
         operation: "changeSong",
         data: {
