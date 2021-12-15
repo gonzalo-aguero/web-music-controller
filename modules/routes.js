@@ -7,6 +7,18 @@ router.get('/', (req, res)=>{
 router.get('/player', (req, res)=>{
     res.render('player.ejs');
 });
+router.get('/uploadSongForm', (req, res)=>{
+    res.render('uploadSongForm.ejs');
+});
+router.post('/add-song', (req, res)=>{
+    require('./addSongHandler').upload(req, (responseMessage)=>{
+        res.render('uploadSongForm.ejs', { 
+            responseMessage
+        });
+        res.end(); 
+    });
+});
+
 router.use((req, res, next)=>{
     // 404 not found
     res.status(404);
@@ -20,4 +32,5 @@ router.use((req, res, next)=>{
     }
     res.type('txt').send('Not found');
 });
+
 module.exports = router;

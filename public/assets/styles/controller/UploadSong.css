@@ -3,8 +3,7 @@
     display: flex;
     flex-flow: column;
     background: rgba(0,0,0,0.7);
-    width: 90%;
-    height: 13em;
+    width: auto;
     border: .5px #444444 solid;
     padding: 4em 1em;
     list-style: none;
@@ -28,29 +27,7 @@
 #uploadSong > nav button:hover{
     opacity: 0.65;
 }
-#uploadSong form{
-    font-size: 1em;
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1.3em;
-}
-form .inputBlock{
-    display: flex;
-    flex-flow: column;
-    gap: .5em;
-}
-form input[type="submit"]{
+#uploadSong > iframe{
+    height: 13em;
     border: none;
-    background-color: #519d51;
-    color: white;
-    font-size: 1.15em;
-    padding: .25em 1em;
-    border-radius: 0.15em;
-    opacity: .8;
-    cursor: pointer;
-}
-form input[type="submit"]:hover{
-    opacity: 1;
 }

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Song Form</title>
+    <style>
+        body{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-flow: row;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        form{
+            font-size: 16px;
+            display: flex;
+            flex-flow: column;
+            gap: 1.1em;
+            padding: 1em;
+            color: white;
+            font-family: sans-serif;
+        }
+        form .inputBlock{
+            display: flex;
+            flex-flow: column;
+            gap: .5em;
+        }
+        form input{
+            outline: none;
+            background: none;
+            border:none;
+            border: .05em white solid;
+            color:white;
+            padding: .35em;
+            border-radius: 0.15em;
+
+        }
+        form input[type="file"]{
+            cursor: pointer;
+            border: none;
+        }
+        form input[type="submit"]{
+            border: none;
+            background-color: #519d51;
+            color: white;
+            font-size: 1.15em;
+            padding: .25em 1em;
+            border-radius: 0.15em;
+            opacity: .8;
+            cursor: pointer;
+        }
+        form input[type="submit"]:hover{
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <form method="post" action="./add-song" enctype="multipart/form-data">
+        <div class="inputBlock">
+            <label for="songName">Song Name</label>
+            <input type="text" name="songName" id="songName"/>
+        </div>
+        <div class="inputBlock">
+            <label for="songToUpload">Click to choose a file</label>
+            <input type="file" name="songToUpload" id="songToUpload" accept="audio/mp3"/>
+        </div>
+        <input type="submit" value="Done">
+        <% if (typeof responseMessage != 'undefined') { %>
+            <script>alert('<%= responseMessage %>');</script>
+        <% } %>
+    </form>
+</body>
+</html>

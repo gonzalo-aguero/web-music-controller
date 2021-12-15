@@ -5,24 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Music Player</title>
-    <link rel="stylesheet" href="assets/styles/index.css">
+    <!-- <link rel="stylesheet" href="assets/styles/index.css"> -->
     <script src="./js/config.js"></script>
     <script src="./js/player/player.js"></script>
+    <style>
+        body{
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+    </style>
 </head>
 <body>
     <nav id="chatNavigation">
         <h1 id="mainTitle">Web Music Player</h1>
-        <button id="start">Start</button>
+        <button id="start">Connect</button>
     </nav>
     <div id="content">
-        <p><strong>Song: </strong><span id="songTitle">-</span></p>
-        <!-- <iframe src="" id="iframe"
-            title="YouTube video player" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen
-        ></iframe> -->
+        <p><strong>Song title: </strong><span id="songTitle">-</span></p>
         <audio src="" allow="autoplay" autoplay preload="preload" controls="controls" type="audio/mp3"></audio>
+        <p>This page will play the audio controlled from the "Web Music Controller" page. For a better experience, it is recommended to connect the device from which you are visiting the "Web Music Player" page to a speaker via Bluetooth or cable.</p>
     </div>
 </body>
 </html>

@@ -1,18 +1,10 @@
 "use strict";
 var socket;
-var connectButton;
-var disconnectButton;
 var globalData;
 window.onload = ()=>{
     connect();
-    connectButton = document.getElementById("connect");
-    disconnectButton = document.getElementById("disconnect");
-
-    connectButton.addEventListener("click", connect);
-    disconnectButton.addEventListener("click", disconnect);
-
     //init animations
-    coloredBackground(document.getElementById("chatNavigation"));    
+    coloredBackground(document.getElementById("header"));    
     setTimeout(()=>{
         coloredBackground(document.getElementById("songs"));
     },750);
@@ -27,7 +19,6 @@ function connect(){
     const server = developmentMode ? localServer : onlineServer;
     socket = new WebSocket(server);
     socket.onopen = async (evt)=>{
-        connectedStatus();
         console.log("Connected");
         const data = JSON.stringify({
             operation: "controllerConnected"
@@ -50,37 +41,25 @@ function connect(){
         }
     }
     socket.onclose = (evt)=>{
-        disconnectedStatus();
         console.log("Disconnected");
         console.log("Trying to connect...");
         connect();
     }
     socket.onerror = (evt)=>{
-        alert("An error has occurred");
+        console.log("An error has occurred");
         console.error(evt);
     }
 }
 function disconnect() {
     socket.close();
 }
+
 /**
- * Set the DOM status when the client is connected.
+ * =================================================
+ * ============ COMMUNICATION FUNCTIONS ============
+ * =================================================
  */
-function connectedStatus(){
-    const connectionStatusHTML = document.getElementById("connectionStatus");
-    connectionStatusHTML.classList.replace("disconnected", "connected");
-    connectButton.disabled = true;
-    disconnectButton.disabled = false;
-}
-/**
- * Set the DOM status when the client is disconnected.
- */
-function disconnectedStatus(){
-    const connectionStatusHTML = document.getElementById("connectionStatus");
-    connectionStatusHTML.classList.replace("connected", "disconnected");
-    connectButton.disabled = false;
-    disconnectButton.disabled = true;
-}
+
 /**
  * Change the current song and send the change to the server.
  * @param {Number} songId 
@@ -170,6 +149,9 @@ function updateQueue(){
             <nav>
                 <button id="clearPlayQueue" onclick="clearPlayQueue()">
                     <img src="assets/icons/delete_white_24dp.svg" alt="Clear play queue">
+                </button>
+                <button id="restartQueueButton" onclick="restartQueue()">
+                    <img src="assets/icons/restart_alt_white_24dp.svg" alt="Restart queue">
                 </button>
                 <button class="close">
                     <img src="assets/icons/close_white_24dp.svg" alt="Close">
