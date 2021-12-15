@@ -66,6 +66,12 @@ class wsHandler{
                     case 'clearPlayQueue':
                         this.clearPlayQueue();
                         break;
+                    case 'skipPrevious':
+                        this.skip('previous');
+                        break;
+                    case 'skipNext':
+                        this.skip('next');
+                        break;
                     default:
                         console.error("Undefined operation");
                         break;
@@ -139,13 +145,12 @@ class wsHandler{
      * Change the current song and send the new current song to clients.
      */
     changeSong(songId){
-        // New song.
-        const newSongIndex = songId;
-        // globalData.songs[newSongIndex].reproducing = true;
-        const newSong = this.globalData.songs[newSongIndex];
+        //Get the song to play.
+        const songToPlayIndex = songId;
+        const newSong = this.globalData.songs[songToPlayIndex];
         this.globalData.song = newSong;
 
-        // Send the new song.
+        //Send the new song.
         let msg = {
             operation: 'newData',
             data: this.globalData
@@ -211,6 +216,20 @@ class wsHandler{
         msg = JSON.stringify(msg);
         this.player.sendUTF(msg);
         this.newData();//send the updated data.
+    }
+    skip(direction = 'next'){
+        let msg;
+        if(direction === 'next'){
+            msg = {
+                operation: 'skipNext'
+            }
+        }else if(direction === 'previous'){
+            msg = {
+                operation: 'skipPrevious'
+            }
+        }
+        msg = JSON.stringify(msg);
+        this.player.sendUTF(msg);
     }
 }
 module.exports.wsHandler = wsHandler;

@@ -1,20 +1,37 @@
+const formidable = require('formidable');
 const fs = require('fs');
-const request = require('request');
+async function upload(req, callback = (responseMessage)=>{}){
+    const form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+        const oldpath = files.songToUpload.filepath;
+        const originalName = files.songToUpload.originalFilename;
+        let newName = fields.songName;
+        let finalName = "";
 
-/**
- * Get and download a file by URL.
- * @param {*} uri 
- * @param {*} filename Name for the new file.
- * @param {*} callback Function to execute when the new file wull be closed.
- */
-function downloadByUrl(uri, filename, callback = ()=>{}){
-    request.head(uri, function(err, res, body){
-        console.log('content-type:', res.headers['content-type']);
-        console.log('content-length:', res.headers['content-length']);
-        request(uri).pipe(fs.createWriteStream(`./public/assets/songs/${filename}.mp3`)).on('close', callback);
+        if(!originalName.includes('.mp3', -4)){
+            callback('The file must be .mp3!');//responseMessage
+            return;
+        }
+        
+        if(newName.length > 0){
+            if(!newName.includes('.mp3', -4)){
+                newName += '.mp3';
+            }
+            finalName = newName;
+        }else{
+            finalName = originalName;
+        }
+    
+        const newpath = './public/assets/songs/' + finalName;
+        fs.rename(oldpath, newpath, function (err) {
+            if (err) throw err;
+
+            callback('Song uploaded successfully!');
+            return;
+        });
     });
-};
+}
 
 module.exports = {
-    downloadByUrl
+    upload
 };

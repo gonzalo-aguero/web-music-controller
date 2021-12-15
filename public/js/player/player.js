@@ -2,7 +2,9 @@
 var socket;
 var globalData = {};
 var currentSongIndex = -1;//Current song index in queue.
-var playOn = false;
+const defaultPath = "./assets/songs/";//default path of the songs.
+var songTitle;
+var audio;
 window.onload = ()=>{
     connect();
     document.getElementById("start").addEventListener("click", connect);
@@ -19,7 +21,6 @@ function connect(){
             operation: "playerConnected"
         });
         socket.send(data);
-        playOn = true;
     }
     socket.onmessage = (evt)=>{
         const response = JSON.parse(evt.data);
@@ -35,10 +36,16 @@ function connect(){
                 }
                 break;
             case 'restartQueue':
-                currentSongIndex = -1;
+                restartQueue();
                 break;
             case 'clearPlayQueue':
                 currentSongIndex = -1;
+                break;
+            case 'skipPrevious':
+                skip('previous');
+                break;
+            case 'skipNext':
+                skip('next');
                 break;
             default:
                 console.error("Undefined operation");
@@ -59,25 +66,46 @@ function newData(data){
     play();
 }
 function play(){
-    const defaultPath = "./assets/songs/";//default path of songs.
-    const songTitle = document.getElementById("songTitle");
-    const audio = document.querySelector("audio");
+    songTitle = document.getElementById("songTitle");
+    audio = document.querySelector("audio");
     setInterval(()=>{
-        if(playOn){
-            //Only if play is on.
-            if(audio.ended || audio.getAttribute("src") === ""){
-                //If the last song has finished or there is no last song.
-                if(currentSongIndex < globalData.queue.length -1){
-                    currentSongIndex++;
-                    const song = globalData.queue[currentSongIndex];
-                    songTitle.innerHTML = song.title;
-                    audio.setAttribute("src", defaultPath + song.src);
-                    audio.play();
-                    changeSong(song.id);
-                }
+        if(audio.ended || audio.getAttribute("src") === ""){
+            //If the last song has finished or there is no last song.
+            if(currentSongIndex < (globalData.queue.length -1)){
+                currentSongIndex++;
+                const songToPlay = globalData.queue[currentSongIndex];
+                songTitle.innerHTML = songToPlay.title;
+                audio.setAttribute("src", defaultPath + songToPlay.src);
+                audio.play();
+                changeSong(songToPlay.id);
             }
         }
     }, 200);
+}
+function restartQueue(){
+    currentSongIndex = 0;
+    const songToPlay = globalData.queue[currentSongIndex];
+    songTitle.innerHTML = songToPlay.title;
+    audio.setAttribute("src", defaultPath + songToPlay.src);
+    audio.play();
+    changeSong(songToPlay.id);
+}
+function skip(direction = 'next'){
+    const nextCondition = currentSongIndex < (globalData.queue.length -1);
+    const previousCondition = currentSongIndex > 0;
+    if(direction === 'next' && nextCondition){
+        currentSongIndex++;
+    }else if(direction === 'previous' && previousCondition){
+        currentSongIndex--;
+    }else{
+        return;
+    }
+
+    const songToPlay = globalData.queue[currentSongIndex];
+    songTitle.innerHTML = songToPlay.title;
+    audio.setAttribute("src", defaultPath + songToPlay.src);
+    audio.play();
+    changeSong(songToPlay.id);
 }
 /**
  * Send the current song to the server.

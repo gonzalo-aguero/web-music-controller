@@ -7,10 +7,16 @@ router.get('/', (req, res)=>{
 router.get('/player', (req, res)=>{
     res.render('player.ejs');
 });
+router.get('/uploadSongForm', (req, res)=>{
+    res.render('uploadSongForm.ejs');
+});
 router.post('/add-song', (req, res)=>{
-    console.log(req.body)
-    require('./addSongHandler').downloadByUrl(req.body.uri, req.body.filename);
-    res.send('1');
+    require('./addSongHandler').upload(req, (responseMessage)=>{
+        res.render('uploadSongForm.ejs', { 
+            responseMessage
+        });
+        res.end(); 
+    });
 });
 
 router.use((req, res, next)=>{

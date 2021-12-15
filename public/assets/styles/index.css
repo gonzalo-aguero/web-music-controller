@@ -35,7 +35,9 @@ body{
     background-color: #1eff00;
     border: 0.1em rgba(30, 255, 0, 0.5) solid;
 }
-
+button{
+    outline: none;
+}
 #mainTitle{
     text-align: center;
     margin:0;
@@ -46,7 +48,7 @@ body{
     font-weight: 300;
     font-size: 1.25em;
 }
-#chatNavigation{
+#header{
     font-size: 16px;
     display: flex;
     flex-flow: row wrap;
@@ -64,7 +66,7 @@ body{
     left:0;
     width:100%;
 }
-#chatNavigation .button{
+#header .button{
     font-size: 1em;
     padding: .25em 1em;
     border: none;
@@ -74,8 +76,8 @@ body{
     transition: .15s;
     font-weight: 400;
 }
-#chatNavigation button:hover,
-#chatNavigation button:active{
+#header button:hover,
+#header button:active{
     opacity: .85;
 }
 
