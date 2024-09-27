@@ -4,7 +4,7 @@
     flex-flow: column;
     background: rgba(0,0,0,0.7);
     width: auto;
-    border: .5px #444444 solid;
+    border-radius: 1em;
     padding: 4em 1em;
     list-style: none;
 }
@@ -30,4 +30,7 @@
 #uploadSong > iframe{
     height: 13em;
     border: none;
+}
+#uploadSong > h2{
+    text-align: center;
 }

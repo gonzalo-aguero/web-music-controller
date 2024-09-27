@@ -6,6 +6,7 @@ function uploadSong(){
                     <img src="assets/icons/close_white_24dp.svg" alt="Close">
                 </button>
             </nav>
+            <h2>Upload Song</h2>
             <iframe src="./uploadSongForm"></iframe>
         </div>
         `;

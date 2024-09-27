@@ -1,13 +1,20 @@
 #playQueue{
-    position: relative;
+    position: fixed;
     display: flex;
     flex-flow: column;
     background: rgba(0,0,0,0.7);
+    top: 5vh;
     width: 90%;
-    height: 95%;
-    border: .5px #444444 solid;
+    height: 80%;
+    border-radius: 1em;
     padding: 4em 1em;
     list-style: none;
+    overflow-y: auto;
+    box-sizing: border-box;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(31, 41, 226, 0.5) transparent;
+    transition: 0.2;
 }
 #playQueue > nav{
     position: absolute;

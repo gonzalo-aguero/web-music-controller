@@ -122,7 +122,7 @@ function updateSongsList(){
     let html = "";
     globalData.songs.forEach( song => {
         html += `
-            <li class="song ${song.id == globalData.song.id ? "reproducing" : ""}">
+            <li class="song ${song.id == globalData.song.id ? "playing" : ""}">
                 <button onclick="">${song.title}</button>
                 <button onclick="addToQueue('${song.id}')">Add to queue</button>
             </li>`;
@@ -162,7 +162,7 @@ function updateQueue(){
     if(globalData.queue.length > 0){
        globalData.queue.forEach( song => {
             html += `
-                <li class="song ${song.id == globalData.song.id ? "reproducing" : ""}">
+                <li class="song ${song.id == globalData.song.id ? "playing" : ""}">
                     <button>${song.title}</button>
                     <button onclick="removeFromQueue('${song.id}')">Remove</button>
                 </li>`;

@@ -17,7 +17,7 @@ body{
     font-family: sans-serif;
     margin: 0;
     padding:0;
-    margin-bottom: 5em;
+    /* margin-bottom: 5em; */
     font-size: 1em;
     color: white;
     font-weight: 100;
@@ -100,11 +100,12 @@ button{
     padding: 1em;
     color: #e1e1e1;
     border: none;
-    border-top: .5px rgba(255, 255, 255, 0.1) solid;
-    border-bottom: .5px rgba(255, 255, 255, 0.1) solid;
+    border-top: .25px rgba(255, 255, 255, 0.05) solid;
+    border-bottom: .25px rgba(255, 255, 255, 0.05) solid;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
+    border-radius: .75em;
 }
 .song > button{
     background: none;
@@ -116,7 +117,7 @@ button{
 .song > button:hover{
     color: #ababab;
 }
-.song.reproducing{
+.song.playing{
     background-color: rgba(31, 41, 226, 0.5);
 }
 #footer{
@@ -126,11 +127,11 @@ button{
     -moz-box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.5);
     box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.5);
     margin: 0;
-    padding: 1em;
-    min-height: 6em;
+    padding: 3em;
+    min-height: 12em;
     display: flex;
     flex-flow: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 }
 #footer > h3{
